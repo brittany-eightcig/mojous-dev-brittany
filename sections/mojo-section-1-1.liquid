@@ -1,0 +1,103 @@
+<div class="index-section" data-section-id="{{ section.id }}" data-section-type="product-section" style="background: linear-gradient(180deg,#fff,#dae7f0);">
+  <div class="row">
+    
+    {%- assign image_size = '1000x' -%}   
+    {%- assign image_width = 'desktop-6 tablet-3' -%}
+    {%- assign image_offset = 'desktop-6 tablet-3' -%}
+    
+    {% capture image_layout %}
+    <div class="{{ image_width }} mobile-3 text-with-image">
+      {% if section.settings.image != blank %}
+      {% if section.settings.full_width %}
+      {{ section.settings.image | img_url: '1400x' | img_tag: section.settings.image.alt }}
+      {% else %}
+      {{ section.settings.image | img_url: '800x' | img_tag: section.settings.image.alt }}
+      {% endif %}
+      {% else %}
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endcapture %}
+
+      <div class="image-with-text-wrapper">
+        {{ image_layout }}
+
+        <div class="{{ image_offset }} mobile-3 text-with-image text_section">
+          {% if section.settings.title != blank %}
+          <h2 class="sections"><span>{{ section.settings.title | escape }}</span></h2>
+          {% endif %}
+          {% if section.settings.text != blank %}
+          <div class="rte">{{ section.settings.text }}</div>
+          {% endif %}
+          {% if section.settings.button1 != blank and section.settings.link1 != blank %}
+          <a href="{{ section.settings.link1 }}" class="button">
+            {{ section.settings.button1 | escape }}
+          </a>
+          {% endif %}
+          {% if section.settings.button2 != blank and section.settings.link2 != blank %}
+          <a href="{{ section.settings.link2 }}" class="button">
+            {{ section.settings.button2 | escape }}
+          </a>
+          {% endif %}
+        </div>
+
+      </div>
+    
+  </div>
+</div>
+<style>
+  [data-section-id="{{ section.id }}"] h2 span { background-color: transparent; }
+</style>
+{% schema %}
+  {
+    "name": "Mojo Section 1 - 1",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image-0",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title-0",
+        "label": "Heading",
+        "default": "Mojo Section 1 - 1"
+      },
+      {
+        "type": "richtext",
+        "id": "text-0",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button1",
+        "label": "Button 1 label"
+      },
+      {
+        "type": "url",
+        "id": "link1",
+        "label": "Button 1 link"
+      },
+      {
+        "type": "text",
+        "id": "button2",
+        "label": "Button 2 label"
+      },
+      {
+        "type": "url",
+        "id": "link2",
+        "label": "Button 2 link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Mojo Section 1 - 1",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

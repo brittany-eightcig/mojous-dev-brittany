@@ -1,0 +1,361 @@
+<div itemscope itemtype="http://schema.org/Product" id="product-{{ product.id }}" class="product-page row product-row" data-section-id="{{ section.id }}" data-section-type="product-page">
+  <div class="product-page-container">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+  <div id="product-photos" class="desktop-5 mobile-3">
+    {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+    <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
+      <img id="{{ product.id }}" data-image-id="{{ image.id }}" src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
+    </div>
+
+    {% if product.images.size > 1 %}
+      {% for image in product.images %}
+      <div class="slide">
+        <a href="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" class="clicker-thumb">
+          <img class="thumbnail desktop-2" src="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}" />
+        </a>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div id="product-right" class="desktop-7 tablet-half mobile-3">
+    <div id="product-description" class="{% if section.settings.related-products %}desktop-10{% else %}desktop-12{% endif %} tablet-6 mobile-3">
+      {% if section.settings.vendor %}<h2>{{ product.vendor }}</h2>{% endif %}
+      <h1 itemprop="name">{{ product.title }}</h1>
+      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <p id="product-price">
+          {% if product.available %}
+          {% if product.compare_at_price > product.price %}
+          <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
+          {% else %}
+          <span class="product-price" itemprop="price">{{ product.price | money }}</span>
+          {% endif %}
+          {% else %}
+          <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
+          {% endif %}
+        </p>  
+
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+        <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+      <div class="rte">
+      {{ product.description }}
+      </div>
+        
+        {% include 'product-form' %}
+
+        <ul id="popups">
+          {% unless section.settings.popup-one == blank %}<li class="first"><a href="#pop-one" class="fancybox">{{ pages[section.settings.popup-one].title }}</a></li>{% endunless %}
+          {% unless section.settings.popup-two == blank %}<li><a href="#pop-two" class="fancybox">{{ pages[section.settings.popup-two].title }}</a></li>{% endunless %}
+          {% unless section.settings.popup-three == blank %}<li><a href="#pop-three" class="fancybox">{{ pages[section.settings.popup-three].title }}</a></li>{% endunless %}
+          {% if section.settings.popup-4 %}<li class="last"><a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a></li>{% endif %}
+        </ul>
+        <div id="pop-one" style="display: none">{{ pages[section.settings.popup-one].content }}</div>
+        <div id="pop-two" style="display: none">{{ pages[section.settings.popup-two].content }}</div>
+        <div id="pop-three" style="display: none">{{ pages[section.settings.popup-three].content }}</div>
+        <div id="pop-four" style="display: none">{% include 'question' %}</div>
+
+      </div>
+      
+      <div class="clear"></div>
+
+    </div>
+
+    {% if section.settings.related-products %}
+    <div id="related" class="desktop-2 tablet-6 mobile-3">
+      {% include 'related-products' %}
+    </div>
+    {% endif %}
+
+  </div>
+  <div class="clear"></div>
+
+  {% if section.settings.recently-viewed %}
+  <div id="looked-at" class="desktop-12 mobile-3">
+    {% include 'recently-viewed' %}
+  </div>
+  <script>
+    Shopify.Products.recordRecentlyViewed();
+  </script>
+  {% endif %}
+</div>
+
+<div class="mojo-product-template-section-0">
+    {%- assign image_size = '1000x' -%}   
+    {%- assign image_width = 'desktop-6 tablet-3' -%}
+    {%- assign image_offset = 'desktop-6 tablet-3' -%}
+    
+    {% capture image_layout %}
+    <div class="{{ image_width }} mobile-3 text-with-image">
+      {% if section.settings.image-0 != blank %}
+      {% if section.settings.full_width %}
+      {{ section.settings.image-0 | img_url: '1400x' | img_tag: section.settings.image.alt }}
+      {% else %}
+      {{ section.settings.image-0 | img_url: '800x' | img_tag: section.settings.image.alt }}
+      {% endif %}
+      {% else %}
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endcapture %}
+
+      <div class="image-with-text-wrapper">
+        {{ image_layout }}
+
+        <div class="{{ image_offset }} mobile-3 text-with-image text_section">
+          {% if section.settings.title-0 != blank %}
+          <h2 class="sections"><span>{{ section.settings.title-0 | escape }}</span></h2>
+          {% endif %}
+          {% if section.settings.text-0 != blank %}
+          <div class="rte">{{ section.settings.text-0 }}</div>
+          {% endif %}
+        </div>
+
+      </div>
+</div>
+
+<div class="mojo-product-template-container-section-1">
+<div class="mojo-product-template-section-1">
+    
+    {%- assign image_size = '1000x' -%}   
+    {%- assign image_width = 'desktop-7 tablet-3' -%}
+    {%- assign image_offset = 'desktop-5 tablet-3' -%}
+    
+    {% capture image_layout %}
+    <div class="{{ image_width }} mobile-3 text-with-image">
+      {% if section.settings.image-1 != blank %}
+      {% if section.settings.full_width %}
+      {{ section.settings.image-1 | img_url: '1400x' | img_tag: section.settings.image.alt }}
+      {% else %}
+      {{ section.settings.image-1 | img_url: '800x' | img_tag: section.settings.image.alt }}
+      {% endif %}
+      {% else %}
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endcapture %}
+
+      <div class="image-with-text-wrapper">
+        {{ image_layout }}
+
+        <div class="{{ image_offset }} mobile-3 text-with-image text_section">
+          {% for block in section.blocks %}
+          <div class="mojo-product-section-1">
+
+            <div class="desktop-3">
+            {% if block.settings.image != blank%}
+                {{ block.settings.image | img_url: '120x' | img_tag: block.settings.image.alt }}
+            {% endif %}
+            </div>
+
+            <div class="desktop-9">
+              {% if block.settings.title != blank %}
+              <h2 class="sections"><span>{{ block.settings.title | escape }}</span></h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+              <div class="rte">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.text-with-image { padding-bottom: 20px; }
+.mojo-product-template-section-1, .mojo-product-template-section-0 { margin: auto; }
+@media screen and (min-width: 1680px) {
+  .gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 1400px; }
+}
+@media screen and (max-width: 1679px) {
+  .gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 1200px; }
+}
+@media screen and (max-width: 1219px) {
+.gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 960px; }
+}
+@media screen and (max-width: 980px) {
+  .gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 720px; }
+}
+@media screen and (max-width: 740px) {
+  .gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 480px; }
+}
+@media screen and (max-width: 500px) {
+  .gridlock .mojo-product-template-section-0, .gridlock .mojo-product-template-section-1 { width: 92%; }
+}
+.mojo-product-template-container-section-1
+{
+  width: 100%;
+  background: linear-gradient(200deg,#eff5f9,#c7dae7);
+}
+.mojo-product-section-1
+{
+  float: left;
+  width: 100%;
+}
+.product-row
+{
+  width: 100% !important;
+}
+.product-page-container
+{
+  width: 100%;
+  float: left;
+  background: linear-gradient(223deg,#73b2d5,#3f7bab);
+  padding: 10% 5%;
+}
+#product-right
+{
+  background-color: #fff;
+  padding: 5%;
+}
+</style>
+
+{% if section.settings.product-variants == 'swatches' %}
+<style>
+.selector-wrapper { display: none; }
+.single-option-selector { 
+  opacity: 0; 
+  display: none;
+}
+</style>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product page",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "vendor",
+        "label": "Show vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "show-quantity",
+        "label": "Show quantity"
+      },
+      {
+        "type": "checkbox",
+        "id": "swatches",
+        "label": "Use swatch buttons",
+        "default": true,
+        "info": "defaults to dropdowns if unchecked"
+      },
+      {
+         "type":      "radio",
+         "id":        "product-variants",
+         "label":     "Product variant display",
+         "options": [
+           { "value": "swatches", "label": "Swatches" },
+           { "value": "drop-downs", "label": "Drop-downs" }
+         ],
+         "default":   "swatches"
+      },
+      {
+        "type": "checkbox",
+        "id": "related-products",
+        "label": "Show related products"
+      },
+      {
+        "type": "checkbox",
+        "id": "recently-viewed",
+        "label": "Show recently viewed"
+      },
+      {
+        "type": "header",
+        "content": "Additional content"
+      },
+      {
+        "type": "page",
+        "id": "popup-one",
+        "label": "First popup content"
+      },
+      {
+        "type": "page",
+        "id": "popup-two",
+        "label": "Second popup content"
+      },
+      {
+        "type": "page",
+        "id": "popup-three",
+        "label": "Third popup content"
+      },
+      {
+        "type": "checkbox",
+        "id": "popup-4",
+        "label": "Show contact popup"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-1",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-0",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title-0",
+        "label": "Heading",
+        "default": "Mojo Section 1"
+      },
+      {
+        "type": "richtext",
+        "id": "text-0",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      }
+    ],
+     "blocks":[  
+      {  
+         "type":"image",
+         "name":"Image",
+         "settings":[  
+            {
+             "type":"url",
+             "id":"link",
+             "label":"Link"
+            },
+            {
+             "type":"image_picker",
+             "id":"image",
+             "label":"Image"
+            },
+            {
+           "type":"text",
+           "id":"title",
+           "label":"Heading",
+           "default":"Mojo Section 3"
+            },
+            {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+            }
+          ]
+        }           
+      ],
+    "presets": [
+      {
+        "name": "Mojo Section 3",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

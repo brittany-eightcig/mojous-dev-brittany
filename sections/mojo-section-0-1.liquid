@@ -1,0 +1,89 @@
+<div class="index-section" data-section-id="{{ section.id }}" data-section-type="video-section">
+
+    <div class="staggered-image-wrapper desktop-12 tablet-6 mobile-3 section-{{ section.id }}">
+        <div class="videoWrapper">
+          <video id="mojo-section-0-1-player" autoplay="autoplay" class="show-tablet page-hero__video js-page-hero-video" type="video/mp4" loop="loop" muted="muted" poster="https://cdn.shopify.com/s/files/1/0014/2750/5235/files/Mojo_Logo_Teal_profile.jpg?1371483289801940768" src="https://cdn.shopify.com/s/files/1/0014/2750/5235/files/mojo-compressed.mp4?1371483289801940768"></video>
+        </div>      
+        <div class="mojo-section-0-1-text-container">
+        {% if section.settings.title != blank %}
+          <h2 class="sections">{{ section.settings.title | escape }}</h2>
+          {% endif %}
+          {% if section.settings.text != blank %}
+          <div class="rte">{{ section.settings.text }}</div>
+          {% endif %}
+          {% if section.settings.button1 != blank and section.settings.link1 != blank %}
+          <a href="{{ section.settings.link1 }}" class="button">
+            {{ section.settings.button1 | escape }}
+          </a>
+        {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<div class="clear"></div>
+<style>
+  [data-section-id="{{ section.id }}"] { margin-bottom: 20px; }
+  #mojo-section-0-1-player { width: 100%; }
+  .mojo-section-0-1-text-container { position: absolute; color: #ffffff; }
+  .mojo-section-0-1-text-container h2 span { background: transparent; }
+  @media screen and ( max-width: 740px ) { .mojo-section-0-1-text-container {top: 5%; margin: 0 5%; } 
+  .mojo-section-0-1-text-container h2 {    
+    margin: 0px auto 20px;
+    font-size: 20px;
+    line-height: 20px; }
+ }
+  @media screen and ( min-width: 740px ) { 
+    .mojo-section-0-1-text-container h2 { font-size: 30px; }
+    .mojo-section-0-1-text-container {top: 35%; margin-left: 10%; } 
+    .mojo-section-0-1-text-container * { max-width: 80%; }
+    .mojo-section-0-1-text-container .sections { display: block; text-align: left !important; margin: 20px 0 !important;}
+}
+@media screen and ( min-width: 980px ) { 
+    .mojo-section-0-1-text-container h2 { font-size: 39px; }
+    }
+ 
+</style>
+{% schema %}
+{  
+   "name":"Mojo Section 0 - 1",
+   "settings":[ 
+            {
+              "type": "video_url",
+              "id": "video_url",
+              "label": "YouTube or Vimeo link",
+              "accept": ["youtube", "vimeo"]
+            },
+            {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Mojo Section 0 - 1"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button1",
+        "label": "Button 1 label"
+      },
+      {
+        "type": "url",
+        "id": "link1",
+        "label": "Button 1 link"
+      }            
+   ],
+  "presets": [
+	{
+      "name": "Mojo Section 0 - 1",
+      "category": "video"
+    }
+	]
+}
+
+
+{% endschema %}

@@ -1,0 +1,114 @@
+<div class="index-section" data-section-id="{{ section.id }}" data-section-type="product-section" style="background: linear-gradient(180deg,#fff,#dae7f0);">
+  <div class="row">
+    
+    {%- assign image_size = '1000x' -%}   
+    {%- assign image_width = 'desktop-7 tablet-3' -%}
+    {%- assign image_offset = 'desktop-5 tablet-3' -%}
+    
+    {% capture image_layout %}
+    <div class="{{ image_width }} mobile-3 text-with-image">
+      {% if section.settings.image != blank %}
+      {% if section.settings.full_width %}
+      <img src="{{ section.settings.image | img_url: '1400x'}}" class="mojo-section-3-1-main-img">
+      {% else %}
+      <img src="{{ section.settings.image | img_url: '800x'}}" class="mojo-section-3-1-main-img">
+      {% endif %}
+      {% else %}
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endcapture %}
+
+      <div class="image-with-text-wrapper">
+        {{ image_layout }}
+
+        <div class="{{ image_offset }} mobile-3 text-with-image text_section">
+          {% for block in section.blocks %}
+          <div class="mojo-section-3-1-container">
+
+            <div class="desktop-3">
+            {% if block.settings.image != blank%}
+                {{ block.settings.image | img_url: '120x' | img_tag: block.settings.image.alt }}
+            {% endif %}
+            </div>
+
+            <div class="desktop-9">
+              {% if block.settings.title != blank %}
+              <h2 class="sections"><span>{{ block.settings.title | escape }}</span></h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+              <div class="rte">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    
+  </div>
+</div>
+<style>
+.mojo-section-3-1-main-img
+{
+  padding-bottom: 20px;
+}
+.mojo-section-3-1-container
+{
+  float: left;
+  width: 100%;
+}
+.mojo-section-3-1-text-container
+{
+  display: inline-block;
+}
+[data-section-id="{{ section.id }}"] h2 span { background-color: transparent; }
+</style>
+{% schema %}
+  {
+    "name": "Mojo Section 3 - 1",
+    "class": "index-section",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      }
+    ],
+     "blocks":[  
+      {  
+         "type":"image",
+         "name":"Image",
+         "settings":[  
+            {
+             "type":"image_picker",
+             "id":"image",
+             "label":"Image"
+            },
+            {
+           "type":"text",
+           "id":"title",
+           "label":"Heading",
+           "default":"Mojo Section 3 - 1"
+            },
+            {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+            }
+          ]
+        }           
+      ],
+    "presets": [
+      {
+        "name": "Mojo Section 3 - 1",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

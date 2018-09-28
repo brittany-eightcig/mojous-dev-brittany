@@ -1,0 +1,197 @@
+<style>
+  div.header-row-socials a {
+    float: right;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+  }
+  div.header-row-socials a img {
+    height: 25px;
+  }
+</style>
+{% assign logo_max_width = 200 %}
+{% assign logo-size = 26 %}
+{%- assign nav_align = 'center' -%}
+<div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
+  <header>
+    <div class="row" style="width: 90%;">
+      <div id="message" class="desktop-6 mobile-3">
+        {{ section.settings.hello }}
+      </div>
+      <div class="header-row-socials desktop-6">
+          <a href="https://www.instagram.com/mojo_us_vape/"><img src="{{ 'instagram.png' | asset_url }}"></a>
+          <a href="https://www.facebook.com/MojoVape.us/"><img src="{{ 'facebook.png' | asset_url }}"></a>
+      </div>
+      <ul id="cart" class="desktop-6 mobile-3">
+        {% comment %}<li class="searchbox">
+          <form action="/search" method="get">
+            <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+          </form>
+        </li>{% endcomment %}
+        {% if shop.customer_accounts_enabled %}
+        {% if customer  %}
+        <li><a href="/account"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.customer.my_account' | t }}</a>&nbsp;&nbsp;<i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
+        {% else %}
+        <li>{{ 'layout.customer.log_in' | t | customer_login_link }}</li>
+        <li>{{ 'layout.customer.create_account' | t | customer_register_link }}</li>
+        {% endif %}
+        {% endif %}
+        {% if settings.show_multiple_currencies %}
+        <li>{% include 'currency-selector' %}</li>
+        {% endif %}
+      </ul>
+    </div>
+  </header>
+  <div class="clear"></div>
+  <div class="header-wrapper">
+    <div class="row" style="width: 100%;">
+      <div id="navigation">
+
+        <div id="mobile-menu-trigger" class="mobile-trigger desktop-3 tablet-2 custom-m-1"><span class="shifter-handle"><i class="fa fa-bars"></i></span></div>
+
+        <div id="logo" class="desktop-3 tablet-1 custom-m-2 logo-center">
+          {% if section.settings.logo != blank %}
+          {%- assign image_size = '100x' -%}
+          <a href="/">
+            <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
+          </a>
+          {% else %}
+          <a href="/">{{ shop.name }}</a>
+          {% endif %}
+        </div>
+
+        <nav class="desktop-nav nav-inline desktop-6 tablet-4 mobile-3 nav-{{ nav_align }}">
+          <ul id="nav">
+            {% for link in linklists[section.settings.main_nav].links %}
+            {% if link.links != blank %}
+            <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">
+              <a class="dlink" href="{{ link.url }}">{{ link.title | escape }}</a>
+              <ul class="submenu">
+                {% for sub_link in link.links %}
+                {% if sub_link.links != blank %}
+                <li class="is_parent has_sub_menu" aria-haspopup="true" aria-expanded="false">
+                  <a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a>
+                  <ul class="sub_sub_menu">
+                    {% for sub_sub_link in sub_link.links %}
+                    <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+            {% else %}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+
+        <div id="mobile-cart" class="desktop-3 tablet-1 custom-m-1 nav-{{ nav_align }}">
+              <a href="/cart"{% if settings.ajax_cart_method == 'drawer' %} class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.cart.my_cart' | t }} <span class="cart-count">({{ cart.item_count }})</span></a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="clear"></div>
+
+</div>
+<style>
+  @media screen and ( max-width: 741px ) {
+    .desktop-nav
+    {
+      display: none;
+    }
+  }
+  {% if section.settings.nav_bottom_border %}
+  #navigation:after {
+    content:"";
+    border-bottom: 1px solid {{ section.settings.nav_bottom_border_color }};
+    position: absolute;
+    bottom: 0;
+    left: 1%;
+    width: 98%;
+  }
+  {% endif %}
+  {% if section.settings.logo != blank %}
+  #logo { line-height: 0; }
+  #logo img { max-width: {{ logo_max_width }}px; }
+  {% endif %}
+  #logo a {
+    font-size: {% if section.settings.use_logo_image %}inherit{% else %}{{ logo-size }}px{% endif %};
+    font-weight: {{ settings.heading-weight }};
+  }
+  .searchbox form #q {
+    font-size: {{ section.settings.header_size }};
+    font-family: {{ section.settings.header_font }};
+  }
+  select#currencies {
+    font-weight: {{ section.settings.header_weight }};
+    font-size: {{ section.settings.header_size }};
+  }
+
+  @media screen and ( min-width: 981px ) {
+    #navigation { display: table; }
+    #logo { display: inline-block; vertical-align: middle; }
+    nav.nav-inline { display: inline-block; vertical-align: middle; }
+  }
+  @media screen and (max-width: 740px) {
+  .custom-m-1
+  {
+    width: 25% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+  .custom-m-2
+  {
+    width: 50% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+  }
+</style>
+
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+      {
+        "type": "link_list",
+        "id": "main_nav",
+        "label": "Choose main menu",
+        "default":"main-menu"
+      },
+	  {
+		"type": "checkbox",
+		"id": "nav_bottom_border",
+		"label": "Add bottom border to header"
+	  },
+      {
+        "type": "color",
+        "id": "nav_bottom_border_color",
+        "label": "Border color",
+        "default": "#f0f0f0"
+      },
+      {
+        "type": "header",
+        "content": "Announement text"
+      },
+      {
+       "id": "hello",
+       "type": "richtext",
+       "label": "Text"
+      }
+    ]
+  }
+{% endschema %}

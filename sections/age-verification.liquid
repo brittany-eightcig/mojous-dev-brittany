@@ -1,0 +1,74 @@
+{{ 'age-verification.js' | asset_url | script_tag }}
+
+<div class="age-verification" id="age-verification">
+    <div>
+      {% if section.settings.show-promo %}<a href="{{section.settings.link}}"><img src="{{ section.settings.image | img_url: '630x'  }}"/></a>{% endif %}
+        <div class="age-verification-info">
+            <h4>{{ section.settings.title }}</h4>
+            <h5>
+                You must be of legal smoking age in your jurisdiction to shop with
+                {{shop.name}}.
+            </h5>
+        </div>
+        <div class="age-verification-button-container">
+            <a class="button button-secondary"
+               href="http://google.com">
+                <span>{{ section.settings.no }}</span>
+            </a> 
+            <a class="button button-primary age-verification-close">
+                <span>{{ section.settings.yes }}</span>
+            </a>
+        </div>
+        <div class="age-verification-notice"><span>By clicking through and going to MojoUS.com you agree that you are at least 21 years old or the legal minimum age to purchase tobacco products in your jurisdiction. When you check out on MojoUS.com you agree to go through an age verification process that will confirm your age, address, and identity via a public database and our internal specialists. You agree that you will not resell any product(s) you purchase from MojoUS.com, and you understand that you are strictly prohibited from distributing any alternative nicotine product to any person under the minimum legal age. If you are in the state of California, Hawaii, New York, and Texas, you must confirm you are 21 years old to enter.</span></div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Age Verification",
+  "settings": [
+    {
+      "type": "text",
+      "id": "yes",
+      "label": "Yes",
+      "default": "Yes"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Image Link"
+    },
+    {
+      "type": "text",
+      "id": "no",
+      "label": "No",
+      "default": "No"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Derp"
+    },
+    {  
+       "type":"image_picker",
+       "id":"image",
+       "label":"Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show-promo",
+      "label": "Show Image",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Age Verification",
+      "category": "Age Verification",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}
