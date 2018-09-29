@@ -8,6 +8,24 @@
   div.header-row-socials a img {
     height: 25px;
   }
+  div.videoWrapper video {
+    filter: brightness(75%);
+  }
+  @media screen and (min-width: 980px) {
+    div#navigation {
+      margin-bottom: -60px;
+      position: relative;
+      z-index: 999;
+    }
+    ul#nav {
+      display: flex;
+      justify-content: flex-end;
+    }
+    div#mobile-cart { display: flex; }
+    ul#nav li a {
+      font-size: 1.3em;
+    }
+  }
 </style>
 {% assign logo_max_width = 200 %}
 {% assign logo-size = 26 %}
@@ -18,24 +36,20 @@
       <div id="message" class="desktop-6 mobile-3">
         {{ section.settings.hello }}
       </div>
-      <div class="header-row-socials desktop-6">
-          <a href="https://www.instagram.com/mojo_us_vape/"><img src="{{ 'instagram.png' | asset_url }}"></a>
-          <a href="https://www.facebook.com/MojoVape.us/"><img src="{{ 'facebook.png' | asset_url }}"></a>
-      </div>
       <ul id="cart" class="desktop-6 mobile-3">
         {% comment %}<li class="searchbox">
           <form action="/search" method="get">
             <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
           </form>
         </li>{% endcomment %}
-        {% if shop.customer_accounts_enabled %}
+        <!-- {% if shop.customer_accounts_enabled %}
         {% if customer  %}
         <li><a href="/account"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.customer.my_account' | t }}</a>&nbsp;&nbsp;<i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
         {% else %}
         <li>{{ 'layout.customer.log_in' | t | customer_login_link }}</li>
         <li>{{ 'layout.customer.create_account' | t | customer_register_link }}</li>
         {% endif %}
-        {% endif %}
+        {% endif %} -->
         {% if settings.show_multiple_currencies %}
         <li>{% include 'currency-selector' %}</li>
         {% endif %}
@@ -53,7 +67,7 @@
           {% if section.settings.logo != blank %}
           {%- assign image_size = '100x' -%}
           <a href="/">
-            <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
+            <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
           </a>
           {% else %}
           <a href="/">{{ shop.name }}</a>
@@ -91,7 +105,7 @@
         </nav>
 
         <div id="mobile-cart" class="desktop-3 tablet-1 custom-m-1 nav-{{ nav_align }}">
-              <a href="/cart"{% if settings.ajax_cart_method == 'drawer' %} class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.cart.my_cart' | t }} <span class="cart-count">({{ cart.item_count }})</span></a>
+              <a href="/cart"{% if settings.ajax_cart_method == 'drawer' %} class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}>{{ 'shopping-cart.png' | asset_url | img_tag }}{% comment %}<span class="cart-count">({{ cart.item_count }})</span>{% endcomment %}</a>
         </div>
 
       </div>

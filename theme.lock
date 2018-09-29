@@ -3,5 +3,9 @@ assets/facebook.png:
   development: 2018-09-11T17:09:14-07:00   707f1f665ca7c441acf2c4daa94b2d99
 assets/instagram.png:
   development: 2018-09-11T17:06:58-07:00   eb8ed2a155d944996a1f2573071a580b
+assets/shopping-cart.png:
+  development: 2018-09-28T17:27:31-07:00   37c400d82c6b56d56529743e4229a7b5
 sections/header.liquid:
-  development: 2018-09-11T17:13:41-07:00   fbb2a7ee4e89005f0dcb6d8b7be8beeb
+  development: 2018-09-28T17:41:30-07:00   c6afaf7a7fc3d141f78a5381c09ad448
+sections/mojo-section-0.liquid:
+  development: 2018-09-28T17:42:14-07:00   32683a7ec164f5842d2126f6f5922d13
